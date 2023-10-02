@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokokita/model/produk.dart';
+import 'package:tokokita/ui/login_page.dart';
 import 'package:tokokita/ui/produk_detail.dart';
 import 'package:tokokita/ui/produk_form.dart';
 import 'package:tokokita/ui/about_page.dart'; // Import halaman AboutPage
@@ -57,10 +58,23 @@ appBar: AppBar(
         child: ListView(
           children: [
             ListTile(
-              title: const Text('Logout'),
-              trailing: const Icon(Icons.logout),
-              onTap: () async {},
-            )
+  title: const Text('Logout'),
+  trailing: const Icon(Icons.logout),
+  onTap: () async {
+    // Tempatkan logika logout di sini, seperti menghapus token atau data sesi
+    // Misalnya:
+
+    // Hapus token atau data sesi
+    // await AuthService.logout();
+
+    // Navigasi kembali ke halaman login
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+  },
+)
+
           ],
         ),
       ),
