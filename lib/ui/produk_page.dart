@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/produk_detail.dart';
 import 'package:tokokita/ui/produk_form.dart';
+import 'package:tokokita/ui/about_page.dart'; // Import halaman AboutPage
 
 class ProdukPage extends StatefulWidget {
   const ProdukPage({Key? key}) : super(key: key);
@@ -14,21 +15,44 @@ class _ProdukPageState extends State<ProdukPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('List Produk'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              child: const Icon(Icons.add, size: 26.0),
-              onTap: () async {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProdukForm()));
-              },
+appBar: AppBar(
+  title: const Text('List Produk'),
+  actions: [
+    Padding(
+      padding: const EdgeInsets.only(right: 20.0),
+      child: Row(
+        children: [
+          GestureDetector(
+            child: const Icon(Icons.add, size: 26.0),
+            onTap: () async {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProdukForm()));
+            },
+          ),
+          const SizedBox(width: 8.0), // Spasi antara ikon dan teks
+          GestureDetector(
+            child: Text(
+              'APUT', // Ganti dengan teks "APUT"
+              style: TextStyle(
+                fontSize: 18.0, // Ukuran teks sesuai kebutuhan
+                fontWeight: FontWeight.bold,
+              ),
             ),
+            onTap: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AboutPage(), // Navigasi ke halaman AboutPage
+                ),
+              );
+            },
           ),
         ],
       ),
+    ),
+  ],
+),
+
       drawer: Drawer(
         child: ListView(
           children: [
