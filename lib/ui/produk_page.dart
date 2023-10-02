@@ -4,6 +4,8 @@ import 'package:tokokita/ui/login_page.dart';
 import 'package:tokokita/ui/produk_detail.dart';
 import 'package:tokokita/ui/produk_form.dart';
 import 'package:tokokita/ui/about_page.dart'; // Import halaman AboutPage
+import 'package:http/http.dart' as http;
+
 
 class ProdukPage extends StatefulWidget {
   const ProdukPage({Key? key}) : super(key: key);
