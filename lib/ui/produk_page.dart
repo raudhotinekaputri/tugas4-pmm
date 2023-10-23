@@ -6,7 +6,6 @@ import 'package:tokokita/ui/login_page.dart';
 import 'package:tokokita/ui/produk_detail.dart';
 import 'package:tokokita/ui/produk_form.dart';
 
-
 class ProdukPage extends StatefulWidget {
   const ProdukPage({Key? key}) : super(key: key);
 
@@ -41,8 +40,10 @@ class _ProdukPageState extends State<ProdukPage> {
               trailing: const Icon(Icons.logout),
               onTap: () async {
                 await LogoutBloc.logout().then((value) => {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()))
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage())),
                     });
               },
             ),

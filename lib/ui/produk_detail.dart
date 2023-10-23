@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/bloc/produk_bloc.dart';
 import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/produk_form.dart';
+import 'package:tokokita/ui/produk_page.dart';
+import 'package:tokokita/widget/warning_dialog.dart';
 
 class ProdukDetail extends StatefulWidget {
   Produk? produk;
@@ -16,7 +19,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Produk'),
+        title: const Text('Detail Produk '),
       ),
       body: Center(
         child: Column(
@@ -44,7 +47,6 @@ class _ProdukDetailState extends State<ProdukDetail> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        //Tombol Edit
         OutlinedButton(
           child: const Text("EDIT"),
           onPressed: () {
@@ -58,7 +60,6 @@ class _ProdukDetailState extends State<ProdukDetail> {
             );
           },
         ),
-        //Tombol Hapus
         OutlinedButton(
           child: const Text("DELETE"),
           onPressed: () => confirmHapus(),
@@ -71,21 +72,29 @@ class _ProdukDetailState extends State<ProdukDetail> {
     AlertDialog alertDialog = AlertDialog(
       content: const Text("Yakin ingin menghapus data ini?"),
       actions: [
-        //tombol hapus
+        // Tombol hapus
         OutlinedButton(
-          child: const Text("Ya"),
+          child: const Text("YA"),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProdukForm(
-                  produk: widget.produk!,
-                ),
-              ),
-            );
+            ProdukBloc.deleteProduk(widget.produk!.id).then((value) {
+              if (value) {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ProdukPage(),
+                ));
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) => const WarningDialog(
+                    description: "Gagal menghapus data. Silakan dicoba lagi.",
+                  ),
+                );
+              }
+            }).catchError((error) {});
+
+            Navigator.pop(context);
           },
         ),
-        //tombol batal
+        // Tombol batal
         OutlinedButton(
           child: const Text("Batal"),
           onPressed: () => Navigator.pop(context),

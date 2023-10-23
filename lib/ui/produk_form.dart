@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:tokokita/bloc/produk_bloc.dart';
 import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/produk_page.dart';
@@ -36,7 +37,8 @@ class _ProdukFormState extends State<ProdukForm> {
         tombolSubmit = "UBAH";
         _kodeProdukTextboxController.text = widget.produk!.kodeProduk!;
         _namaProdukTextboxController.text = widget.produk!.namaProduk!;
-        _hargaProdukTextboxController.text = widget.produk!.hargaProduk.toString();
+        _hargaProdukTextboxController.text =
+            widget.produk!.hargaProduk.toString();
       });
     } else {
       judul = "TAMBAH PRODUK";
@@ -58,7 +60,7 @@ class _ProdukFormState extends State<ProdukForm> {
                 _kodeProdukTextField(),
                 _namaProdukTextField(),
                 _hargaProdukTextField(),
-                _buttonSubmit()
+                _buttonSubmit(),
               ],
             ),
           ),
@@ -109,6 +111,7 @@ class _ProdukFormState extends State<ProdukForm> {
     );
   }
 
+  //Membuat Tombol Simpan/Ubah
   Widget _buttonSubmit() {
     return OutlinedButton(
       child: Text(tombolSubmit),
@@ -117,8 +120,10 @@ class _ProdukFormState extends State<ProdukForm> {
         if (validate) {
           if (!_isLoading) {
             if (widget.produk != null) {
+              //kondisi update produk
               ubah();
             } else {
+              //kondisi tambah produk
               simpan();
             }
           }
@@ -136,9 +141,11 @@ class _ProdukFormState extends State<ProdukForm> {
     createProduk.namaProduk = _namaProdukTextboxController.text;
     createProduk.hargaProduk = int.parse(_hargaProdukTextboxController.text);
     ProdukBloc.addProduk(produk: createProduk).then((value) {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) => const ProdukPage(),
-      ));
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => const ProdukPage(),
+        ),
+      );
     }, onError: (error) {
       showDialog(
         context: context,
@@ -163,8 +170,7 @@ class _ProdukFormState extends State<ProdukForm> {
     updateProduk.hargaProduk = int.parse(_hargaProdukTextboxController.text);
     ProdukBloc.updateProduk(produk: updateProduk).then((value) {
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) => const ProdukPage(),
-      ));
+          builder: (BuildContext context) => const ProdukPage()));
     }, onError: (error) {
       showDialog(
         context: context,
